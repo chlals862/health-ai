@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health AI - 로그인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login-button {
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .login-footer p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .signup-link:hover {
+            color: #764ba2;
+        }
+
+        .dashboard-view {
+            display: none;
+        }
+
+        .dashboard-view.active {
+            display: block;
+        }
+
+        .login-view.hidden {
+            display: none;
+        }
+
+        .dashboard-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            color: white;
+        }
+
+        .dashboard-header h1 {
+            font-size: 28px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-email {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .logout-button {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .welcome-card h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-card p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .health-data-form-container {
+            margin-bottom: 40px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-card h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .health-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-group label span {
+            font-size: 18px;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-button {
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .health-data-list-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+
+        .health-data-list-container h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .data-table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table thead {
+            background-color: #f5f5f5;
+        }
+
+        .data-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #fafafa;
+        }
+
+        .date-cell {
+            font-weight: 500;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <!-- 로그인 화면 -->
+    <div id="loginView" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>💪 Health AI</h1>
+                <p>건강과 AI를 결합한 헬스케어 솔루션</p>
+            </div>
+
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="your@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="비밀번호를 입력하세요"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="login-button">로그인</button>
+            </form>
+
+            <div class="login-footer">
+                <p>
+                    계정이 없으신가요?
+                    <span class="signup-link" onclick="showSignup()">회원가입</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 회원가입 화면 -->
+    <div id="signupView" class="login-container" style="display: none;">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>💪 Health AI</h1>
+                <p>회원가입</p>
+            </div>
+
+            <form class="login-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input
+                        id="name"
+                        type="text"
+                        placeholder="이름을 입력하세요"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-email">이메일</label>
+                    <input
+                        id="signup-email"
+                        type="email"
+                        placeholder="your@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-password">비밀번호</label>
+                    <input
+                        id="signup-password"
+                        type="password"
+                        placeholder="비밀번호를 입력하세요"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">비밀번호 확인</label>
+                    <input
+                        id="confirm-password"
+                        type="password"
+                        placeholder="비밀번호를 다시 입력하세요"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="login-button">회원가입</button>
+            </form>
+
+            <div class="login-footer">
+                <p>
+                    이미 계정이 있으신가요?
+                    <span class="signup-link" onclick="showLogin()">로그인</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 대시보드 화면 -->
+    <div id="dashboardView" class="dashboard-container" style="display: none;">
+        <div class="dashboard-header">
+            <h1>💪 Health AI Dashboard</h1>
+            <div class="header-right">
+                <span class="user-email"><span id="userEmail">user@email.com</span>님</span>
+                <button class="logout-button" onclick="handleLogout()">로그아웃</button>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('overview', this)">📊 대시보드</button>
+                <button class="tab" onclick="switchTab('health-data', this)">📈 건강 데이터</button>
+            </div>
+
+            <!-- 개요 탭 -->
+            <div id="overviewTab" class="tab-content active">
+                <div class="welcome-card">
+                    <h2>환영합니다, <span id="userEmail2">user@email.com</span>님!</h2>
+                    <p>건강 관리 AI 대시보드에 접속하셨습니다.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>📊 건강 데이터 분석</h3>
+                        <p>일일 건강 데이터를 입력하고 AI가 분석해드립니다.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🏃 운동 추적</h3>
+                        <p>일일 운동량 및 진전 상황을 추적합니다.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🥗 영양 관리</h3>
+                        <p>식단 및 영양 정보를 관리합니다.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💤 수면 분석</h3>
+                        <p>수면 패턴을 분석하고 개선 방안을 제시합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 건강 데이터 탭 -->
+            <div id="healthDataTab" class="tab-content">
+                <div class="health-data-form-container">
+                    <div class="form-card">
+                        <h3>📝 오늘의 건강 데이터 입력</h3>
+                        
+                        <form class="health-form" onsubmit="handleAddHealthData(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="steps">
+                                        <span>🚶</span> 걸음 수 (걸음)
+                                    </label>
+                                    <input id="steps" type="number" placeholder="0" min="0" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="heart_rate">
+                                        <span>❤️</span> 심박수 (bpm)
+                                    </label>
+                                    <input id="heart_rate" type="number" placeholder="0" min="0" />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sleep_hours">
+                                        <span>😴</span> 수면 시간 (시간)
+                                    </label>
+                                    <input id="sleep_hours" type="number" placeholder="0" min="0" max="24" step="0.5" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="water_intake">
+                                        <span>💧</span> 물 섭취량 (ml)
+                                    </label>
+                                    <input id="water_intake" type="number" placeholder="0" min="0" />
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="calories">
+                                    <span>🔥</span> 칼로리 섭취 (kcal)
+                                </label>
+                                <input id="calories" type="number" placeholder="0" min="0" />
+                            </div>
+
+                            <button type="submit" class="submit-button">데이터 저장</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="health-data-list-container">
+                    <h3>📊 건강 데이터 기록</h3>
+                    <div id="dataTableContainer" class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>날짜 및 시간</th>
+                                    <th>🚶 걸음</th>
+                                    <th>❤️ 심박수</th>
+                                    <th>😴 수면</th>
+                                    <th>💧 물</th>
+                                    <th>🔥 칼로리</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
+                                        저장된 건강 데이터가 없습니다. 위의 양식에서 데이터를 입력해주세요!
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock 데이터 저장소 (LocalStorage 사용)
+        let healthDataList = JSON.parse(localStorage.getItem('healthData') || '[]');
+
+        function showSignup() {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('signupView').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('loginView').style.display = 'block';
+            document.getElementById('signupView').style.display = 'none';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            document.getElementById('userEmail').textContent = email;
+            document.getElementById('userEmail2').textContent = email;
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('dashboardView').style.display = 'block';
+            localStorage.setItem('currentUser', email);
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('signup-email').value;
+            alert('회원가입 완료! 로그인 화면으로 이동합니다.');
+            showLogin();
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = '';
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'block';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            localStorage.removeItem('currentUser');
+        }
+
+        function switchTab(tabName, buttonElement) {
+            // 모든 탭 숨기기
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+
+            // 선택된 탭 보이기
+            if (tabName === 'overview') {
+                document.getElementById('overviewTab').classList.add('active');
+            } else if (tabName === 'health-data') {
+                document.getElementById('healthDataTab').classList.add('active');
+            }
+
+            // 버튼 활성화
+            buttonElement.classList.add('active');
+        }
+
+        function handleAddHealthData(event) {
+            event.preventDefault();
+
+            const newData = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+                steps: parseInt(document.getElementById('steps').value) || 0,
+                heart_rate: parseInt(document.getElementById('heart_rate').value) || 0,
+                sleep_hours: parseFloat(document.getElementById('sleep_hours').value) || 0,
+                water_intake: parseInt(document.getElementById('water_intake').value) || 0,
+                calories: parseInt(document.getElementById('calories').value) || 0,
+            };
+
+            // 데이터 저장
+            healthDataList.unshift(newData);
+            localStorage.setItem('healthData', JSON.stringify(healthDataList));
+
+            // 폼 초기화
+            document.querySelector('.health-form').reset();
+
+            // 테이블 업데이트
+            updateDataTable();
+
+            // 성공 메시지
+            alert('✅ 건강 데이터가 저장되었습니다!');
+        }
+
+        function updateDataTable() {
+            const tableBody = document.getElementById('dataTableBody');
+
+            if (healthDataList.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
+                            저장된 건강 데이터가 없습니다. 위의 양식에서 데이터를 입력해주세요!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = healthDataList.map(data => `
+                <tr>
+                    <td class="date-cell">${data.date}</td>
+                    <td>${data.steps}</td>
+                    <td>${data.heart_rate}</td>
+                    <td>${data.sleep_hours}h</td>
+                    <td>${data.water_intake}ml</td>
+                    <td>${data.calories}kcal</td>
+                </tr>
+            `).join('');
+        }
+
+        // 페이지 로드 시 테이블 업데이트
+        window.addEventListener('load', () => {
+            updateDataTable();
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                document.getElementById('userEmail').textContent = currentUser;
+                document.getElementById('userEmail2').textContent = currentUser;
+                document.getElementById('loginView').style.display = 'none';
+                document.getElementById('dashboardView').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+.health-data-list-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  margin-top: 30px;
+}
+
+.health-data-list-container h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.health-data-loading,
+.health-data-error {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.health-data-error {
+  background-color: #fee;
+  color: #c33;
+  border-radius: 5px;
+  border-left: 4px solid #c33;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.no-data p {
+  margin: 10px 0;
+}
+
+.data-table-container {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table thead {
+  background-color: #f5f5f5;
+}
+
+.data-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.data-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #666;
+}
+
+.data-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.date-cell {
+  font-weight: 500;
+  color: #667eea;
+}
+
+@media (max-width: 768px) {
+  .health-data-list-container {
+    padding: 15px;
+  }
+
+  .data-table {
+    font-size: 12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px;
+  }
+}
