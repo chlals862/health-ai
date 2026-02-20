@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { authServiceFirebase } from './services/firebase';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import './App.css';
 
@@ -44,8 +45,16 @@ function App() {
           element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login setIsLoggedIn={setIsLoggedIn} />} 
         />
         <Route 
+          path="/login" 
+          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login setIsLoggedIn={setIsLoggedIn} />} 
+        />
+        <Route 
           path="/signup" 
           element={isLoggedIn ? <Navigate to="/dashboard" /> : <Signup />} 
+        />
+        <Route 
+          path="/forgot-password" 
+          element={isLoggedIn ? <Navigate to="/dashboard" /> : <ForgotPassword />} 
         />
         <Route 
           path="/dashboard" 

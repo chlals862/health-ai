@@ -68,6 +68,9 @@ function Login({ setIsLoggedIn }) {
               required
               disabled={loading}
             />
+            <Link to="/forgot-password" className="forgot-password-link">
+              비밀번호 찾기
+            </Link>
           </div>
 
           {error && <div className="error-message">{error}</div>}
